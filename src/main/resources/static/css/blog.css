@@ -1,0 +1,24 @@
+.e img{
+  height: 50px;
+}
+.e{
+  padding-right: 20px;
+}
+
+/* Index content*/
+.blog-content-container {
+  margin-top: 2.0em;
+  background-color: #fff;
+}
+.div_foot {
+  position: absolute;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  width: 100%;
+}
+.blog-avatar-50-s{
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}
