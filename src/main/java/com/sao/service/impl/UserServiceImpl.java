@@ -41,6 +41,20 @@ public class UserServiceImpl implements UserService {
         user.setAvatar("/image/avatar-defualt.jpg");
         return userRepository.save(user);
     }
+    /**
+     * QQ注册用户
+     * @param user
+     * @return
+     */
+    @Transactional
+    @Override
+    public User registerQQUser(User user) {
+        String salt=SaltUtils.getSalt();
+        String encryptedPassword=MD5Utils.getEncryptedPassword(salt,user.getPassword());
+        user.setPassword(encryptedPassword);
+        user.setSalt(salt);
+        return userRepository.save(user);
+    }
 
     @Transactional
     @Override
@@ -66,6 +80,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByPhone(String phone) {
         return userRepository.findUserByPhone(phone);
+    }
+
+    @Override
+    public User getUserByOpenId(String openId) {
+        return userRepository.findUserByOpenId(openId);
     }
 
 

@@ -21,12 +21,14 @@ public class User implements Serializable {
     private String introduction;
     //密码加盐
     private String salt;
+    //第三方QQ登录
+    private String openId;
 
     protected User() { //改为protected防止直接使用
 
     }
 
-    public User(String nick, String password, String email, String phone, String sex, String avatar, String introduction, String salt) {
+    public User(String nick, String password, String email, String phone, String sex, String avatar, String introduction, String salt, String openId) {
         this.nick = nick;
         this.password = password;
         this.email = email;
@@ -35,6 +37,7 @@ public class User implements Serializable {
         this.avatar = avatar;
         this.introduction = introduction;
         this.salt = salt;
+        this.openId = openId;
     }
 
     public Long getId() {
@@ -109,6 +112,14 @@ public class User implements Serializable {
         this.salt = salt;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -121,6 +132,7 @@ public class User implements Serializable {
                 ", avatar='" + avatar + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", salt='" + salt + '\'' +
+                ", openId='" + openId + '\'' +
                 '}';
     }
 }

@@ -18,9 +18,8 @@
 <div class="container">
     <div class="col-md-12">
         <h1 class="margin-bottom-15">Wiliwili博客</h1>
-        <input type="hidden" th:value="${msg}" id="errorMsg">
         <form id="loginForm" class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30"
-              role="form" action="/login" method="post">
+              role="form" method="post" onsubmit="return false" action="##">
             <h3>帐号登录</h3>
             <br>
             <div class="form-group">
@@ -47,7 +46,7 @@
                 <div class="col-md-12">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" checked="checked"  name="rememberMe">记住我
+                            <input type="checkbox" checked="checked" id="rememberMe" name="rememberMe">记住我
                         </label>
                     </div>
                 </div>
@@ -56,14 +55,14 @@
             <div class="form-group">
                 <div class="col-md-12">
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">登  录</button>
+                    <input type="button" value="登  录" class="btn btn-lg btn-primary btn-block" onclick="toLogin()">
 
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-12">
-                    <a><i class="fa fa-qq fa-fw"></i>QQ账号登录  </a>
+                    <a href="/login/qq"><i class="fa fa-qq fa-fw"></i>QQ账号登录  </a>
                     <a class="btn-text grey pull-right" href="/register">没有Wiliwili账号？立即注册 >></a>
                 </div>
             </div>

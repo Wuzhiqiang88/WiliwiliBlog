@@ -195,7 +195,7 @@ function toRegister() {
                 dataType: 'json',
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                async: true, //false 同步
+                async: false, //false 同步
                 success: function (data) {
                     //业务处理
                     if (data.status != 200) {
@@ -206,13 +206,37 @@ function toRegister() {
                             timeout: 2
                         });
                     } else {
+                        //注册成功
                         bootoast({
                             message: data.msg,
                             type: 'success',
                             position: 'top',
                             timeout: 2
                         });
-                        window.location.href = "/login";
+                        var url=data.url;
+                        //登录
+                        $.ajax({
+                            url: '/login', // 登录接口
+                            type: 'POST',
+                            data:{
+                                password: $('#password').val(),
+                                username: $('#email').val(),
+                                rememberMe:false,
+                            },
+                            success: function (data) {
+                                //业务处理
+                                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                                   window.location.href = url;
+                                },2000);
+
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("error")
+                                console.log(XMLHttpRequest.status);
+                                console.log(XMLHttpRequest.readyState);
+                                console.log(textStatus);
+                            }
+                        });
                     }
 
                 },

@@ -2,6 +2,7 @@ package com.sao.config.shiro;
 
 import com.sao.domain.User;
 import com.sao.service.UserService;
+import com.sao.util.MD5Utils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -25,19 +26,27 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取用户名
         String username = (String) token.getPrincipal();
-        System.out.println(username);
-        if(userService.getUserByEmail(username)==null&&userService.getUserByPhone(username)==null){
+        System.out.println("认证的用户名： "+username);
+
+        User emailUser=userService.getUserByEmail(username);
+        User phoneUser=userService.getUserByPhone(username);
+        User openIdUser=userService.getUserByOpenId(username);
+        if(emailUser==null&&phoneUser==null&&openIdUser==null){
+            System.out.println("用户名错误");
             throw new UnknownAccountException();
         }
         User user =null;
-        if(userService.getUserByEmail(username)!=null){
-            user=userService.getUserByEmail(username);
+        if(emailUser!=null){
+            user=emailUser;
             System.out.println(user.toString());
-
         }
-        if(userService.getUserByPhone(username)!=null){
-            user=userService.getUserByPhone(username);
-
+        if(phoneUser!=null){
+            user=phoneUser;
+        }
+        if(openIdUser!=null){
+            user=openIdUser;
+            user.setPassword( MD5Utils.getEncryptedPassword(user.getSalt(),user.getOpenId()));
+            return  new SimpleAuthenticationInfo(user, user.getPassword() ,ByteSource.Util.bytes(user.getSalt()), getName());
         }
         return  new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
 

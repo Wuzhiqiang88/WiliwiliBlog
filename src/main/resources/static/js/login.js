@@ -1,14 +1,4 @@
 $(function () {
-    var msg = $('#errorMsg').val();
-    if (msg != null&&msg!="") {
-        bootoast({
-            message: msg,
-            type: 'danger',
-            position: 'top',
-            timeout: 2
-        });
-    }
-
     <!--数据验证-->
     $("#loginForm").bootstrapValidator({
         message: 'This value is not valid',
@@ -54,3 +44,41 @@ $(function () {
     })
 
 })
+
+/**
+ * 登录按钮
+ */
+function toLogin() {
+    /*手动验证表单，当是普通按钮时。*/
+    $('#loginForm').data('bootstrapValidator').validate();//启用验证
+    var flag = $('#loginForm').data('bootstrapValidator').isValid()//验证是否通过true/false
+    if (flag) {
+        $.ajax({
+            url: '/login', // 登录接口
+            type: 'POST',
+            data: $('#loginForm').serialize(),
+            success: function (data) {
+                console.log("success");
+                //业务处理
+                if (data.status != 200) {
+                    bootoast({
+                        message: data.msg,
+                        type: 'danger',
+                        position: 'top',
+                        timeout: 2
+                    });
+                } else {
+                    window.location.href =  data.url;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("error")
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            }
+        });
+    }
+}
+
+

@@ -4,7 +4,7 @@ var username=$("#catalogName").attr("data-username");
 $(function() {
     testEditor = editormd("test-editormd", {
         width   : "100%",
-        height  : 800,
+        height  : 750,
         syncScrolling : "single",
         path    : "../../editormd/lib/"
     });

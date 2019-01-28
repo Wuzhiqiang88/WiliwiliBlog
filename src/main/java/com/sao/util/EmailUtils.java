@@ -52,9 +52,12 @@ public class EmailUtils {
     }
 
    /* public static void main(String[] args) {
+        long startTime=System.currentTimeMillis();   //获取开始时间
         try {
             EmailUtils.send_mail("635354107@qq.com", "333323");
             System.out.println("邮件发送成功!");
+            long endTime=System.currentTimeMillis();  //获取结束时间
+            System.out.println("程序运行时间："+(endTime-startTime)+"ms");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

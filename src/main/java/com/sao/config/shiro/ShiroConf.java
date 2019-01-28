@@ -46,7 +46,7 @@ public class ShiroConf {
         shiroFilterFactoryBean.setLoginUrl("/login");  // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         Map<String, String> chains = new LinkedHashMap<>();
         chains.put("/logout", "logout");//登出
-        shiroFilterFactoryBean.setSuccessUrl("/index");// 登录成功后要跳转的链接
+       // shiroFilterFactoryBean.setSuccessUrl("/index");// 登录成功后要跳转的链接
         //chains.put("/login", "anon");//anon表示可以匿名访问
        // chains.put("/u/**", "authc");//表示需要认证，才能访问
         chains.put("/u/**", "user");//表示需要认证或记住我都能访问
@@ -61,7 +61,7 @@ public class ShiroConf {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         securityManager.setRealm(shiroRealm());
-
+        securityManager.setCacheManager(cacheManager());
         securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
@@ -84,7 +84,13 @@ public class ShiroConf {
         shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return shiroRealm;
     }
-
+    //缓存管理
+    @Bean
+    public EhCacheManager cacheManager() {
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return cacheManager;
+    }
 
     //密码管理
     @Bean

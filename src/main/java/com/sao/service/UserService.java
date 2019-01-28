@@ -20,6 +20,12 @@ public interface UserService {
      */
     User registerUser(User user);
     /**
+     * 注册QQ用户
+     * @param user
+     * @return
+     */
+    User registerQQUser(User user);
+    /**
      * 删除用户
      * @param id
      * @return
@@ -38,6 +44,8 @@ public interface UserService {
     User getUserByNick(String nick);
 
     User getUserByPhone(String phone);
+
+    User getUserByOpenId(String openId);
 
 
 }
